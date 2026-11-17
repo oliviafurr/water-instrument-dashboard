@@ -69,13 +69,13 @@ ITEMS = {
     1: {
         "text": "D₂O is comprised of one of hydrogen's isotopes deuterium (²H) and oxygen. How do D₂O and H₂O compare?",
         "correct_choice": "D₂O has a higher mass than H₂O.",
-        "correct_conception": "Isotopes of the same element have different masses; deuterium has a greater mass than hydrogen",
+        "correct_conception": "This choice reflects the correct idea that isotopes of the same element have different masses due to different numbers of neutrons; deuterium has a greater mass than hydrogen because of this.",
         "alternate_conceptions": [
-            "D₂O contains more electrons than H₂O",
-            "D₂O takes up more physical space than H₂O",
-            "D₂O contains more protons than H₂O",
+            "Isotopes of the same element have the same number of protons but differ in their number of neutrons. Consider how changes in the numbers of protons, neutrons, and electrons can influence an atom's identity, mass, and charge.",
+            "Isotopes of the same element have the same number of protons but differ in their number of neutrons. Consider how changes in numbers of protons, neutrons, and electrons can influence an atom's identity, mass, charge, and radius.",
+            "Isotopes of the same element have the same number of protons but differ in their number of neutrons. Consider how changes in the numbers of protons, neutrons, and electrons can influence an atom's identity, mass, and charge.",
         ],
-        "vocab_note": "Students may confuse 'isotope' with 'ion'. Emphasizing that isotopes differ only in neutron count (not proton or electron count) can help.",
+        "vocab_note": "You may be confusing 'isotope' with 'ion'. Isotopes differ only in neutron count (not proton or electron count).",
     },
     2: {
         "text": "Which of the following best describes the electrons in a bond formed between H and O in a water molecule?",
