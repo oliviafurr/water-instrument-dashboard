@@ -92,7 +92,7 @@ ITEMS = {
         "correct_choice": "Ionic bonding occurs when positive and negative ions are held together by electrostatic forces.",
         "correct_conception": "Positive and negative ions are held together by electrostatic forces in an ionic bond",
         "alternate_conceptions": [
-            "Ionic bonding involves the uneven sharing of electrons",
+            "While this choice correctly identifies that the bond between H and O is polar, it also reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why are core electrons not shared?",
             "Ionic bonds form molecules by transferring electrons between two atoms",
             "Ionic bonding occurs between a metal and a nonmetal atom",
         ],
