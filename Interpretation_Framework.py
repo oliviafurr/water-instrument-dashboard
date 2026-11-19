@@ -1,5 +1,5 @@
 """
-Water Instrument Dashboard — landing page.
+Water Instrument Student Dashboard — landing page.
 Authenticated entry point. After login, routes to the four data pages.
 """
 
@@ -9,7 +9,7 @@ import auth
 from theme import inject_css, page_header, sidebar_about, AC_COLOR, CC_COLOR, TEXT, TEXT_MUTED
 
 st.set_page_config(
-    page_title="Water Instrument Dashboard",
+    page_title="Water Instrument Student Dashboard",
     page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded",
