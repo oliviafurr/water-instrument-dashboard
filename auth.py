@@ -82,7 +82,7 @@ def _resolve_data_path(raw: Optional[str]) -> Optional[str]:
 def _render_login_form(config: dict) -> None:
     """Render the login form and authenticate on submit. Calls st.stop() if
     the user is not yet authenticated so the calling page does not continue."""
-    page_header("Water Instrument Dashboard", "Sign in to view your students' data.")
+    page_header("Water Instrument Student Dashboard", "Sign in to view your assessment data.")
 
     with st.form("login_form"):
         username = st.text_input("Username").strip().lower()
