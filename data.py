@@ -104,7 +104,7 @@ ITEMS = {
         "correct_choice": "The valence electrons of each atom are attracted to the nucleus of the other atom.",
         "correct_conception": "Valence electrons of each are attracted to the nucleus of the other atom",
         "alternate_conceptions": [
-            "H is positively charged, and O is negatively charged",
+            "The atoms to not form fully charged species (ions) but instead share electrons giving rise to a partial positive or negative charge.",
             "Oxygen needs to fill its valence shell",
             "Oxygen is more electronegative and attracts hydrogen's electron to itself",
         ],
