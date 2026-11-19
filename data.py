@@ -83,9 +83,8 @@ ITEMS = {
         "correct_conception": "Valence electrons are shared in covalent bonding and core electrons do not participate",
         "alternate_conceptions": [
             "While this choice correctly identifies that the bond between H and O is polar, it also reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why aren’t core electrons shared?",
-            "This choice reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why aren’t core electrons shared? Additionally, this bond between H and O would be a polar bond. Think about what factors must be considered to determine bond polarity."
-            "While this choice correctly identifies that only valence electrons are shared in a covalent bond and that core electrons do not participate, it also reflects the idea that the bond between O and H is nonpolar. Review the electronegativities of H and O. Would this difference result in a polar or nonpolar bond?"
-
+            "This choice reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why aren’t core electrons shared? Additionally, this bond between H and O would be a polar bond. Think about what factors must be considered to determine bond polarity.",
+            "While this choice correctly identifies that only valence electrons are shared in a covalent bond and that core electrons do not participate, it also reflects the idea that the bond between O and H is nonpolar. Review the electronegativities of H and O. Would this difference result in a polar or nonpolar bond?",
         ],
         "vocab_note": "The terms 'core' vs. 'valence' electrons are critical here. Students sometimes use these interchangeably.",
     },
