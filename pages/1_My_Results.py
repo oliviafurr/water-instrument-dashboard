@@ -355,9 +355,7 @@ for ac_name, ac_info in ANCHORING_CONCEPTS.items():
         render_inline_summary(iid, row, item, is_flagged)
 
 
-        # brief correct/prominent summary
-        with col_summary:
-            render_inline_summary(iid, row, item, is_flagged)
+     
 
         # Click-to-expand: full question text, all conceptions in A..D order,
         # vocabulary note, and tailored resources.
