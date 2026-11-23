@@ -196,23 +196,49 @@ def render_inline_summary(iid: int, row, item: dict, is_flagged: bool) -> None:
 
     blocks = []
     for choice in (1, 2, 3, 4):
+
         if choice > n_choices:
+
             continue
+        if choice != correct and counts.get(choice, 0) == 0:
+            
+            continue
+
+        count = counts.get(choice, 0)
+
         is_correct = choice == correct
-        is_prominent = choice in prominent_set
-        if not (is_correct or is_prominent):
+
+        # Show the correct conception always, and any alternate
+
+        # conception that at least one student selected.
+
+        if not is_correct and count == 0:
+
             continue
-
+ 
         letter = chr(ord("A") + choice - 1)
-        pct = round(counts.get(choice, 0) / n * 100)
-        text = _choice_text(choice, correct, item)
 
+        pct = round(count / n * 100)
+
+        text = _choice_text(choice, correct, item)
+ 
         if is_correct:
+
             pill_class = "pill cc"
+
             role_tag = "Most Correct Conception"
-        else:
+
+        elif choice in prominent_set:
+
             pill_class = "pill prominent"
+
             role_tag = "Prominent Alternate Conception"
+
+        else:
+
+            pill_class = "pill ac"
+
+            role_tag = "Alternate Conception"
 
         blocks.append(
             f'<div style="margin-bottom:0.6rem;">'
