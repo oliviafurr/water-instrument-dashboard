@@ -70,7 +70,7 @@ with col2:
     st.markdown(
         f"""
         <div class="card">
-            <h4 style="margin-top:0;">My Learning Over Time</h4>
+            <h4 style="margin-top:0;">My Confidence Results</h4>
             <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
                 View your results across multiple assessment time points to see your progress in chemistry
                 understanding and confidence over time.
@@ -86,7 +86,7 @@ with col3:
     st.markdown(
         f"""
         <div class="card">
-            <h4 style="margin-top:0;">Reflection Task</h4>
+            <h4 style="margin-top:0;">My Learning Over Time</h4>
             <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
              Click the button below to access the reflection task on the Blackboard course page.
             </p>
