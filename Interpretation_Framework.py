@@ -101,7 +101,7 @@ with col4:
     st.markdown(
         f"""
         <div class="card">
-            <h4 style="margin-top:0;">Your Fourth Card Title</h4>
+            <h4 style="margin-top:0;">Reflection Task</h4>
             <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
                 Click the button below to access the reflection task on the Blackboard course page.
             </p>
@@ -109,7 +109,7 @@ with col4:
         """,
         unsafe_allow_html=True,
     )
-    if st.button("Open page", key="go_fourth", use_container_width=True):
+    if st.button("Open reflection", key="go_fourth", use_container_width=True):
         st.switch_page("pages/4_Refle.py")
 
 st.markdown(
