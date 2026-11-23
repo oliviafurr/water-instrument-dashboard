@@ -64,7 +64,7 @@ with col1:
         unsafe_allow_html=True,
     )
     if st.button("Open results", key="go_radar", use_container_width=True):
-        st.switch_page("pages/1_Predicted_vs_Actual.py")
+        st.switch_page("pages/1_My_Results.py")
 
 with col2:
     st.markdown(
@@ -80,7 +80,7 @@ with col2:
         unsafe_allow_html=True,
     )
     if st.button("Open trends", key="go_trends", use_container_width=True):
-        st.switch_page("pages/2_Anchoring_Concepts_Trends.py")
+        st.switch_page("pages/2_My_Learning_Over_Time.py")
 
 with col3:
     st.markdown(
@@ -95,7 +95,7 @@ with col3:
         unsafe_allow_html=True,
     )
     if st.button("Open reflection task", key="go_conf", use_container_width=True):
-        st.switch_page("pages/3_Student_Confidence.py")
+        st.switch_page("pages/3_Reflection_Task.py")
 
 
 
