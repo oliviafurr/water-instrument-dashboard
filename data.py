@@ -79,21 +79,21 @@ ITEMS = {
     },
     2: {
         "text": "Which of the following best describes the electrons in a bond formed between H and O in a water molecule?",
-        "correct_choice": "Core electrons do not participate, and valence electrons are shared in a polar covalent bond.",
+        "correct_choice": "This choice reflects the correct idea that valence electrons are shared in covalent bonding, core electrons do not participate, and that the bond between H and O is polar.",
         "correct_conception": "Valence electrons are shared in covalent bonding and core electrons do not participate",
         "alternate_conceptions": [
-            "While this choice correctly identifies that the bond between H and O is polar, it also reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why aren’t core electrons shared?",
-            "This choice reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why aren’t core electrons shared? Additionally, this bond between H and O would be a polar bond. Think about what factors must be considered to determine bond polarity.",
+            "While this choice correctly identifies that the bond between H and O is polar, it also reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why are core electrons not shared?",
+            "This choice reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why are core electrons not shared? Additionally, this bond between H and O would be a polar bond. Think about what factors must be considered to determine bond polarity.",
             "While this choice correctly identifies that only valence electrons are shared in a covalent bond and that core electrons do not participate, it also reflects the idea that the bond between O and H is nonpolar. Review the electronegativities of H and O. Would this difference result in a polar or nonpolar bond?",
         ],
-        "vocab_note": "The terms 'core' vs. 'valence' electrons are critical here. Students sometimes use these interchangeably.",
+        "vocab_note": "The terms 'core' vs. 'valence' electrons are critical here. They cannot be used interchangeably.",
     },
     3: {
         "text": "How does ionic bonding (e.g. NaCl) differ from the bond formed between H and O in a water molecule?",
         "correct_choice": "Ionic bonding occurs when positive and negative ions are held together by electrostatic forces.",
         "correct_conception": "Positive and negative ions are held together by electrostatic forces in an ionic bond",
         "alternate_conceptions": [
-            "Ionic bonding involves the uneven sharing of electrons",
+            "While this choice correctly identifies that the bond between H and O is polar, it also reflects the idea that core and valence electrons are shared in a covalent bond. It is true that valence electrons are share in covalent bonds, but why are core electrons not shared?",
             "Ionic bonds form molecules by transferring electrons between two atoms",
             "Ionic bonding occurs between a metal and a nonmetal atom",
         ],
