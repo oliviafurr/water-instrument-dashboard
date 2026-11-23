@@ -345,47 +345,17 @@ for ac_name, ac_info in ANCHORING_CONCEPTS.items():
         n_choices = 1 + len(item["alternate_conceptions"])
         is_flagged = bool(row["prominent_ac"])
 
-        x_vals = [counts.get(i, 0) for i in (1, 2, 3, 4)]
-        bar_colors = []
-        for i in (1, 2, 3, 4):
-            if i > n_choices:
-                bar_colors.append("rgba(0,0,0,0)")
-            elif i == correct:
-                bar_colors.append(CC_COLOR)
-            elif i in prominent_set:
-                bar_colors.append(AC_COLOR)
-            else:
-                bar_colors.append(AC_FADED_COLOR)
-
+    # Question label (replaces the chart title)
         flag_suffix = "  ▲" if is_flagged else ""
-        title_text = f"Item {iid}{flag_suffix}"
-
-        fig = go.Figure(go.Bar(
-            x=x_vals,
-            y=LETTERS,
-            orientation="h",
-            marker_color=bar_colors,
-            hovertemplate="<b>%{y}</b>: %{x} students<extra></extra>",
-        ))
-        apply_plotly_theme(fig)
-        fig.update_layout(
-            height=190,
-            margin=dict(l=10, r=10, t=34, b=24),
-            title=dict(
-                text=title_text,
-                x=0.5,
-                xanchor="center",
-                font=dict(size=14, color=FLAG_COLOR if is_flagged else TEXT),
-            ),
-            xaxis=dict(range=[0, x_max], dtick=2 if x_max <= 50 else 5, title=None),
-            yaxis=dict(autorange="reversed", title=None),
-            showlegend=False,
+        st.markdown(
+            f'<p style="font-size:0.95rem; font-weight:600; margin:0.8rem 0 0.3rem 0; '
+            f'color:{FLAG_COLOR if is_flagged else TEXT};">Question {iid}{flag_suffix}</p>',
+            unsafe_allow_html=True,
         )
+        render_inline_summary(iid, row, item, is_flagged)
 
-        # Chart on the left, brief correct/prominent summary on the right
-        col_chart, col_summary = st.columns([3, 2])
-        with col_chart:
-            st.plotly_chart(fig, width='stretch', key=f"ac_chart_{iid}")
+
+        # brief correct/prominent summary
         with col_summary:
             render_inline_summary(iid, row, item, is_flagged)
 
