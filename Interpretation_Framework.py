@@ -50,7 +50,7 @@ st.markdown(
 
 st.markdown("### Start here")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown(
         f"""
@@ -72,15 +72,14 @@ with col2:
         <div class="card">
             <h4 style="margin-top:0;">My Confidence Results</h4>
             <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
-                View your results across multiple assessment time points to see your progress in chemistry
-                understanding and confidence over time.
+                View your confidence results across conceptual areas.
             </p>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    if st.button("Open trends", key="go_trends", use_container_width=True):
-        st.switch_page("pages/2_My_Learning_Over_Time.py")
+    if st.button("Open results", key="go_trends", use_container_width=True):
+        st.switch_page("pages/2_My_Confidence_Results.py")
 
 with col3:
     st.markdown(
@@ -88,16 +87,30 @@ with col3:
         <div class="card">
             <h4 style="margin-top:0;">My Learning Over Time</h4>
             <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
-             Click the button below to access the reflection task on the Blackboard course page.
+             View your results across multiple assessment time points to see your progress in chemistry
+                understanding and confidence over time.
             </p>
         </div>
         """,
         unsafe_allow_html=True,
     )
     if st.button("Open reflection task", key="go_conf", use_container_width=True):
-        st.switch_page("pages/3_Reflection_Task.py")
+        st.switch_page("pages/3_My_Learning_Over_Time.py")
 
-
+with col4:
+    st.markdown(
+        f"""
+        <div class="card">
+            <h4 style="margin-top:0;">Your Fourth Card Title</h4>
+            <p style="color:{TEXT_MUTED}; font-size:0.85rem; line-height:1.5; margin-bottom:0.5rem;">
+                Click the button below to access the reflection task on the Blackboard course page.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("Open page", key="go_fourth", use_container_width=True):
+        st.switch_page("pages/4_Refle.py")
 
 st.markdown(
     f"""
