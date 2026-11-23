@@ -1,5 +1,5 @@
 """
-Page 2 — My Results
+Page 1 — My Results
 Per-item response distributions organized by ACS Anchoring Concept, with click-to-expand
 item detail (question text, alternate conceptions, vocabulary notes, tailored resources).
 
@@ -9,7 +9,6 @@ consumes it once to filter the AC multiselect down to that concept.
 """
 
 import streamlit as st
-import plotly.graph_objects as go
 import sys
 import os
 
@@ -18,8 +17,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import auth
 from data import ANCHORING_CONCEPTS, ITEMS, RESOURCES, CORRECT_ANSWERS, get_data
 from theme import (
-    inject_css, page_header, data_banner, sidebar_about, apply_plotly_theme,
-    CC_COLOR, AC_COLOR, AC_FADED_COLOR, FLAG_COLOR, TEXT_MUTED, TEXT, BORDER, SURFACE,
+    inject_css, page_header, data_banner, sidebar_about,
+    CC_COLOR, AC_COLOR, AC_FADED_COLOR, FLAG_COLOR, TEXT_MUTED, TEXT,
 )
 
 st.set_page_config(page_title="Anchoring Concept Trends", page_icon=None, layout="wide")
@@ -38,10 +37,9 @@ data_banner(df, is_real)
 flagged_df = df[df["prominent_ac"] == True]
 total_items = len(df)
 flagged_count = len(flagged_df)
-flagged_pct = round(flagged_count / total_items * 100) if total_items else 0
 resource_count = sum(len(v) for v in RESOURCES.values())
 
-c1, c2, c3, c4 = st.columns(4)
+c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown(
         f'<div class="stat"><div class="num">{total_items}</div>'
@@ -55,12 +53,6 @@ with c2:
         unsafe_allow_html=True,
     )
 with c3:
-    st.markdown(
-        f'<div class="stat"><div class="num">{flagged_pct}%</div>'
-        f'<div class="label">Of Questions Flagged</div></div>',
-        unsafe_allow_html=True,
-    )
-with c4:
     st.markdown(
         f'<div class="stat"><div class="num cc">{resource_count}</div>'
         f'<div class="label">Tailored Resources Available</div></div>',
@@ -81,12 +73,10 @@ if _preselect_ac and _preselect_ac in ANCHORING_CONCEPTS:
 
 # ── Controls ──────────────────────────────────────────────────────────────────
 # Sort options use a (label, key) structure so the visible label can be changed
-# freely without breaking the sort logic below. Edit the strings; the keys
-# (the second element) are what the code compares against.
+# freely without breaking the sort logic below.
 SORT_OPTIONS = [
-    ("Question Number",                                  "item_number"),
-    ("Prominent Alternate Conceptions First",            "prominent_first"),
-    ("Lowest % of Correct Conceptions Picked First",     "cc_low_to_high"),
+    ("Question Number",                       "item_number"),
+    ("Prominent Alternate Conceptions First", "prominent_first"),
 ]
 SORT_LABELS = [label for label, _ in SORT_OPTIONS]
 SORT_LABEL_TO_KEY = {label: key for label, key in SORT_OPTIONS}
@@ -121,26 +111,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ── Shared chart constants ───────────────────────────────────────────────────
-LETTERS = ["A", "B", "C", "D"]
-n_students_global = int(df["n_students"].max()) if len(df) else 46
-x_max = max(10, n_students_global)
-x_max = ((x_max + 4) // 5) * 5  # round up to nearest 5 for a clean axis end
 
-
-def _safe_int(value):
-    """Coerce a DataFrame cell to int, or None if missing/NaN/non-numeric.
-    Needed because pandas turns columns with any None values into float64,
-    so prominent_choice arrives as 2.0 instead of 2."""
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
-
-
+# ── Helpers ───────────────────────────────────────────────────────────────────
 def _prominent_set(row) -> set:
-    """Return the set of choice numbers (1..4) that are flagged as prominent
-    for this row. Empty set when no AC crosses the prominence threshold."""
+    """Return the set of choice numbers (1..4) flagged as prominent for this
+    row. Empty set when no AC crosses the prominence threshold."""
     raw = row.get("prominent_choices")
     if raw is None:
         return set()
@@ -148,6 +123,15 @@ def _prominent_set(row) -> set:
         return {int(c) for c in raw if c is not None}
     except TypeError:
         return set()
+
+
+def _pill_style(choice: int, correct: int, prominent_set: set):
+    """Return (pill_class, role_tag) for a given answer choice."""
+    if choice == correct:
+        return "pill cc", "Most Correct Conception"
+    if choice in prominent_set:
+        return "pill prominent", "Prominent Alternate Conception"
+    return "pill ac", "Alternate Conception"
 
 
 def render_resource_card(res: dict) -> str:
@@ -183,12 +167,10 @@ def _choice_text(choice: int, correct: int, item: dict) -> str:
         return ""
 
 
-def render_inline_summary(iid: int, row, item: dict, is_flagged: bool) -> None:
-    """Compact summary shown next to the bar chart.
-    Walks A..D order so the pills line up with the chart. Shows the correct
-    conception plus every prominent AC. Non-prominent ACs are deferred to the
-    full-detail expander."""
-    n = int(row["n_students"]) or 1
+def render_inline_summary(iid: int, row, item: dict) -> None:
+    """Compact summary shown under each question label.
+    Walks A..D order. Shows the correct conception always, plus any alternate
+    conception that at least one student selected."""
     counts = row["choice_counts"]
     correct = CORRECT_ANSWERS[iid]
     prominent_set = _prominent_set(row)
@@ -196,54 +178,25 @@ def render_inline_summary(iid: int, row, item: dict, is_flagged: bool) -> None:
 
     blocks = []
     for choice in (1, 2, 3, 4):
-
         if choice > n_choices:
-
-            continue
-        if choice != correct and counts.get(choice, 0) == 0:
-            
             continue
 
         count = counts.get(choice, 0)
-
         is_correct = choice == correct
 
-        # Show the correct conception always, and any alternate
-
-        # conception that at least one student selected.
-
+        # Skip alternate conceptions nobody selected
         if not is_correct and count == 0:
-
             continue
- 
+
         letter = chr(ord("A") + choice - 1)
-
-        pct = round(count / n * 100)
-
         text = _choice_text(choice, correct, item)
- 
-        if is_correct:
-
-            pill_class = "pill cc"
-
-            role_tag = "Most Correct Conception"
-
-        elif choice in prominent_set:
-
-            pill_class = "pill prominent"
-
-            role_tag = "Prominent Alternate Conception"
-
-        else:
-
-            pill_class = "pill ac"
-
-            role_tag = "Alternate Conception"
+        pill_class, role_tag = _pill_style(choice, correct, prominent_set)
+        selected_tag = " &middot; Student selected" if count > 0 else ""
 
         blocks.append(
             f'<div style="margin-bottom:0.6rem;">'
-            f'<span class="{pill_class}">{letter} &middot; {pct}% &middot; '
-            f'<span style="font-weight:600;">{role_tag}</span></span>'
+            f'<span class="{pill_class}">{letter} &middot; '
+            f'<span style="font-weight:600;">{role_tag}</span>{selected_tag}</span>'
             f'<p style="color:{TEXT_MUTED}; font-size:0.82rem; line-height:1.5; '
             f'margin:0.3rem 0 0 0;">{text}</p>'
             f'</div>'
@@ -253,9 +206,8 @@ def render_inline_summary(iid: int, row, item: dict, is_flagged: bool) -> None:
 
 
 def render_full_detail(iid: int, row, item: dict, is_flagged: bool) -> None:
-    """Full item detail. Question text, all conceptions in A..D order, vocab, resources."""
-    n = int(row["n_students"]) or 1
-    counts = row["choice_counts"]
+    """Full item detail: question text, all conceptions in A..D order,
+    vocabulary note, and tailored resources."""
     correct = CORRECT_ANSWERS[iid]
     prominent_set = _prominent_set(row)
     n_choices = 1 + len(item["alternate_conceptions"])
@@ -267,27 +219,17 @@ def render_full_detail(iid: int, row, item: dict, is_flagged: bool) -> None:
         unsafe_allow_html=True,
     )
 
-    # All conceptions in A..D order so they match the chart above
+    # All conceptions in A..D order
     for choice in (1, 2, 3, 4):
         if choice > n_choices:
             continue
         letter = chr(ord("A") + choice - 1)
-        pct = round(counts.get(choice, 0) / n * 100)
         text = _choice_text(choice, correct, item)
-
-        if choice == correct:
-            pill_class = "pill cc"
-            role_tag = "Most Correct Conception"
-        elif choice in prominent_set:
-            pill_class = "pill prominent"
-            role_tag = "Prominent Alternate Conception"
-        else:
-            pill_class = "pill ac"
-            role_tag = "Alternate Conception"
+        pill_class, role_tag = _pill_style(choice, correct, prominent_set)
 
         st.markdown(
             f'<div style="margin-bottom:0.6rem;">'
-            f'<span class="{pill_class}">{letter} &middot; {pct}% &middot; {role_tag}</span>'
+            f'<span class="{pill_class}">{letter} &middot; {role_tag}</span>'
             f'<p style="color:{TEXT}; font-size:0.88rem; line-height:1.5; '
             f'margin:0.3rem 0 0 0.5rem;">{text}</p>'
             f'</div>',
@@ -295,8 +237,7 @@ def render_full_detail(iid: int, row, item: dict, is_flagged: bool) -> None:
         )
 
     # Vocabulary notes follow the same gating rule as tailored resources:
-    # only surface them when the item has at least one prominent AC, so the
-    # instructor sees them when they are actionable.
+    # only surface them when the item has at least one prominent AC.
     if is_flagged and item.get("vocab_note"):
         st.markdown(
             f'<div class="note"><span class="label">Vocabulary</span>'
@@ -342,8 +283,6 @@ for ac_name, ac_info in ANCHORING_CONCEPTS.items():
     if sort_key == "prominent_first":
         # Flagged items first; within each group, fall back to item number.
         ac_df = ac_df.sort_values(["prominent_ac", "item_id"], ascending=[False, True])
-    elif sort_key == "cc_low_to_high":
-        ac_df = ac_df.sort_values("cc_pct")
     else:  # item_number, default
         ac_df = ac_df.sort_values("item_id")
 
@@ -365,26 +304,18 @@ for ac_name, ac_info in ANCHORING_CONCEPTS.items():
     for _, row in ac_df.iterrows():
         iid = int(row["item_id"])
         item = ITEMS[iid]
-        counts = row["choice_counts"]
-        correct = CORRECT_ANSWERS[iid]
-        prominent_set = _prominent_set(row)
-        n_choices = 1 + len(item["alternate_conceptions"])
         is_flagged = bool(row["prominent_ac"])
 
-    # Question label (replaces the chart title)
+        # Question label
         flag_suffix = "  ▲" if is_flagged else ""
         st.markdown(
             f'<p style="font-size:0.95rem; font-weight:600; margin:0.8rem 0 0.3rem 0; '
             f'color:{FLAG_COLOR if is_flagged else TEXT};">Question {iid}{flag_suffix}</p>',
             unsafe_allow_html=True,
         )
-        render_inline_summary(iid, row, item, is_flagged)
+        render_inline_summary(iid, row, item)
 
-
-     
-
-        # Click-to-expand: full question text, all conceptions in A..D order,
-        # vocabulary note, and tailored resources.
+        # Click-to-expand: full question text, all conceptions, vocab, resources
         expander_label = (
             f"Full detail and resources for Question {iid}"
             if is_flagged
