@@ -1,5 +1,5 @@
 """
-Page 1 — Predicted vs. Actual
+Page 4 — Reflection Task
 Instructor enters predictions before seeing results, then submits to reveal the comparison radar.
 
 Placed first in the navigation so the bare confidence/performance charts on
