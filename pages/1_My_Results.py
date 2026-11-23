@@ -1,5 +1,5 @@
 """
-Page 2 — Anchoring Concept Trends
+Page 2 — My Results
 Per-item response distributions organized by ACS Anchoring Concept, with click-to-expand
 item detail (question text, alternate conceptions, vocabulary notes, tailored resources).
 

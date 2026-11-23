@@ -1,5 +1,5 @@
 """
-Page 3 — Student Confidence
+Page 3 — My Learning Over Time
 Students' metacognitive calibration: how their confidence aligns with their actual performance.
 Renamed from "Confidence Trends" to disambiguate from page 4 (instructor calibration).
 """
