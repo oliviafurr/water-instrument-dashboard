@@ -94,7 +94,7 @@ with col3:
         """,
         unsafe_allow_html=True,
     )
-    if st.button("Open reflection task", key="go_conf", use_container_width=True):
+    if st.button("Open Time Point Comparison", key="go_conf", use_container_width=True):
         st.switch_page("pages/3_My_Learning_Over_Time.py")
 
 with col4:
