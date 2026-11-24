@@ -85,10 +85,10 @@ SORT_LABEL_TO_KEY = {label: key for label, key in SORT_OPTIONS}
 # None means "all concepts".
 AC_PRESETS = {
     "All Anchoring Concepts": None,
-    "Preset 1 (Assessment Time Point 1)": ["AC1: Atoms", "AC2: Bonding", "AC3: Sturcture and Function", "AC5: Reactions"],"],
-    "Preset 2 (Assessment Time Point 2)": ["AC4: Intermolecular Forces",],
-    "Preset 3 (Assessment Time Point 3)": ["AC6: Energy and Thermodynamics", "AC7: Kinetics"],
-    "Preset 4 (Assessment Time Point 4)": ["AC8: Equilibrium"],
+    "Assessment Time Point 1": ["AC1: Atoms", "AC2: Bonding", "AC3: Sturcture and Function", "AC5: Reactions"],"],
+    "Assessment Time Point 2": ["AC4: Intermolecular Forces",],
+    "Assessment Time Point 3": ["AC6: Energy and Thermodynamics", "AC7: Kinetics"],
+    "Assessment Time Point 4": ["AC8: Equilibrium"],
 }
 
 ALL_ACS = list(ANCHORING_CONCEPTS.keys())
