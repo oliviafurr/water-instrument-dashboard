@@ -72,8 +72,6 @@ if _preselect_ac and _preselect_ac in ANCHORING_CONCEPTS:
     st.session_state["ac_filter_widget"] = [_preselect_ac]
 
 # ── Controls ──────────────────────────────────────────────────────────────────
-# Sort options use a (label, key) structure so the visible label can be changed
-# freely without breaking the sort logic below.
 SORT_OPTIONS = [
     ("Question Number",                       "item_number"),
     ("Prominent Alternate Conceptions First", "prominent_first"),
@@ -81,7 +79,36 @@ SORT_OPTIONS = [
 SORT_LABELS = [label for label, _ in SORT_OPTIONS]
 SORT_LABEL_TO_KEY = {label: key for label, key in SORT_OPTIONS}
 
-col_ctrl1, col_ctrl2, col_ctrl3 = st.columns([2, 2, 2])
+# Preset groups of Anchoring Concepts. Edit the labels and the names inside
+# each list. The names must match the Anchoring Concept names EXACTLY
+# (same spelling, capitalization and punctuation as in the multiselect below).
+# None means "all concepts".
+AC_PRESETS = {
+    "All Anchoring Concepts": None,
+    "Preset 1 (Assessment Time Point 1)": ["AC1: Atoms", "AC2: Bonding", "AC3: Sturcture and Function", "AC5: Reactions"],"],
+    "Preset 2 (Assessment Time Point 2)": ["AC4: Intermolecular Forces",],
+    "Preset 3 (Assessment Time Point 3)": ["AC6: Energy and Thermodynamics", "AC7: Kinetics"],
+    "Preset 4 (Assessment Time Point 4)": ["AC8: Equilibrium"],
+}
+
+ALL_ACS = list(ANCHORING_CONCEPTS.keys())
+
+# Start with every concept selected the first time the page loads.
+if "ac_filter_widget" not in st.session_state:
+    st.session_state["ac_filter_widget"] = ALL_ACS
+
+
+def _apply_preset():
+    """Runs when the Quick view dropdown changes; fills in the multiselect."""
+    names = AC_PRESETS[st.session_state["ac_preset"]]
+    if names is None:
+        st.session_state["ac_filter_widget"] = ALL_ACS
+    else:
+        # Keep only names that really exist, so a typo can't crash the page.
+        st.session_state["ac_filter_widget"] = [n for n in names if n in ANCHORING_CONCEPTS]
+
+
+col_ctrl1, col_ctrl2, col_ctrl3, col_ctrl4 = st.columns([2, 2, 2, 2])
 with col_ctrl1:
     sort_label = st.selectbox(
         "Sort questions within each Anchoring Concept by",
@@ -91,10 +118,16 @@ with col_ctrl1:
 with col_ctrl2:
     show_flagged_only = st.checkbox("Show Flagged Questions Only", value=False)
 with col_ctrl3:
+    st.selectbox(
+        "Quick view: preset Anchoring Concepts",
+        list(AC_PRESETS.keys()),
+        key="ac_preset",
+        on_change=_apply_preset,
+    )
+with col_ctrl4:
     selected_acs = st.multiselect(
         "Filter by Anchoring Concept",
-        list(ANCHORING_CONCEPTS.keys()),
-        default=list(ANCHORING_CONCEPTS.keys()),
+        ALL_ACS,
         key="ac_filter_widget",
     )
 
